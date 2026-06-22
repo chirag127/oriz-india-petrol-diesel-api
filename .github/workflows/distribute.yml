@@ -1,0 +1,25 @@
+name: distribute
+
+# Lightweight 'announce' step — pings the master oriz repo whenever a fresh scrape lands,
+# so the family-wide status page can pick it up. Kept LAZY: just a curl + exit.
+
+on:
+  push:
+    branches: [main]
+    paths: [data/latest.json]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify master (best-effort)
+        run: |
+          curl -sS -o /dev/null -w "%{http_code}\n" \
+            -X POST https://oriz.in/_api/ingest-ping \
+            -H 'content-type: application/json' \
+            -d '{"repo":"${{ github.repository }}","sha":"${{ github.sha }}","at":"'"$(date -u +%FT%TZ)"'"}' \
+            || true

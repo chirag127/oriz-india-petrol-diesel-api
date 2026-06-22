@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>oriz-india-petrol-diesel-api — Oriz</title>
+<link rel="manifest" href="/manifest.webmanifest" />
+<meta name="theme-color" content="#0f172a" />
+<meta name="description" content="Daily city-wise petrol and diesel rates for India." />
+<style>
+  :root { color-scheme: light dark; }
+  * { box-sizing: border-box; }
+  body { font: 16px/1.55 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 2rem; max-width: 56rem; margin-inline: auto; }
+  h1 { font-size: 1.85rem; margin: 0 0 .25em; letter-spacing: -.01em; }
+  h2 { margin-top: 2.5rem; font-size: 1.15rem; }
+  p.lede { color: #64748b; margin-top: .25em; }
+  code, pre { font: .92em ui-monospace, SFMono-Regular, Menlo, monospace; }
+  pre { background: #f1f5f9; padding: 1rem; border-radius: .6rem; overflow-x: auto; }
+  @media (prefers-color-scheme: dark) { pre { background: #1e293b; } }
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+  th, td { text-align: left; padding: .55rem .75rem; border-bottom: 1px solid #e2e8f0; }
+  @media (prefers-color-scheme: dark) { th, td { border-color: #334155; } }
+  button { font: inherit; padding: .55rem 1rem; border-radius: .5rem; border: 1px solid #0f172a; background: #0f172a; color: white; cursor: pointer; }
+  button:hover { opacity: .9; }
+  .row { display: flex; gap: .75rem; align-items: center; margin: 1rem 0; flex-wrap: wrap; }
+  footer { margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid #e2e8f0; color: #64748b; font-size: .9rem; }
+  @media (prefers-color-scheme: dark) { footer { border-color: #334155; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>oriz-india-petrol-diesel-api</h1>
+  <p class="lede">Daily city-wise petrol and diesel rates for India.</p>
+</header>
+
+<h2>Endpoints</h2>
+<table>
+  <thead><tr><th>URL</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td><code>/latest.json</code></td><td>Most recent scrape</td></tr>
+    <tr><td><code>/data/&lt;YYYY-MM-DD&gt;.json</code></td><td>Dated snapshot</td></tr>
+    <tr><td><code>https://fuel.api.oriz.in/</code></td><td>Custom domain (CNAME — DNS may be pending)</td></tr>
+  </tbody>
+</table>
+
+<h2>Try it</h2>
+<div class="row">
+  <button id="fetch">Fetch /latest.json</button>
+  <a href="/latest.json">open raw</a>
+</div>
+<pre id="out">click "Fetch" to load latest.json</pre>
+
+<h2>Schedule</h2>
+<p>Cron: <code>0 5 * * *</code> (UTC). User-Agent: <code>oriz-api-bot/0.1 (+https://oriz.in/about; contact: privacy@oriz.in)</code>. Rate: ≤1 fetch / upstream / day.</p>
+
+<footer>
+  <p>Part of the <a href="https://oriz.in">Oriz</a> family. Source code: <a href="https://github.com/chirag127/oriz-india-petrol-diesel-api">github.com/chirag127/oriz-india-petrol-diesel-api</a>. MIT licensed. Attribution required.</p>
+</footer>
+
+<script type="module">
+  const out = document.getElementById('out');
+  document.getElementById('fetch').addEventListener('click', async () => {
+    out.textContent = 'loading…';
+    try {
+      const r = await fetch('/latest.json', { cache: 'no-store' });
+      out.textContent = JSON.stringify(await r.json(), null, 2);
+    } catch (e) { out.textContent = 'error: ' + e.message; }
+  });
+</script>
+</body>
+</html>

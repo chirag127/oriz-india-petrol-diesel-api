@@ -1,0 +1,10 @@
+{
+  "name": "oriz-india-petrol-diesel-api",
+  "short_name": "india-petrol-diesel",
+  "description": "Daily city-wise petrol and diesel rates for India.",
+  "start_url": "/",
+  "display": "minimal-ui",
+  "background_color": "#ffffff",
+  "theme_color": "#0f172a",
+  "icons": []
+}

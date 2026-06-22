@@ -1,0 +1,12 @@
+node_modules/
+.wrangler/
+.dev.vars
+.env
+dist/
+*.log
+.DS_Store
+
+# env (synced via Doppler)
+.env.local
+.env.*.local
+.sops-age-key.txt

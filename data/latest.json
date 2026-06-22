@@ -1,0 +1,11 @@
+{
+  "date": "2026-06-22",
+  "source": "goodreturns",
+  "currency": "INR",
+  "unit": "litre",
+  "petrol": {
+    "mumbai": 3,
+    "chennai": 3
+  },
+  "diesel": {}
+}
